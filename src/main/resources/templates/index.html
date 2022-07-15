@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <title>Todo list</title>
+</head>
+<link rel="stylesheet" href="/css/content.css" type="text/css"/>
+<link rel="stylesheet" href="/css/checkbox.css" type="text/css"/>
+<link rel="stylesheet" href="/css/button.css" type="text/css"/>
+
+<script>
+    function status(value) {
+        $.get('http://localhost:8080/item/status', {"id": value})
+    }
+</script>
+<script>
+    function filter() {
+        $('#fil').on('change', function () {
+            var change = $(this).prop('checked');
+            $.get(change === true ? 'filter' : 'all').done(function(fragment) {
+                $("#content").replaceWith(fragment);
+            });
+        })
+    }
+</script>
+<body>
+<div>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="navbar-nav" style="margin-left: 40px">
+            <li class="nav-item active">
+                <a class="nav-link" href="home">TODO</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav" style="z-index: 3;position: absolute; right: 50%">
+            <li class="nav-item active">
+                <a class="nav-link" href="/item">Добавить задачу</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav  ml-auto">
+            <li class="nav-item active" id="username">
+                <a class="nav-link" th:text="${user.name}"></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/logout">Выйти</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div style="width: 100%; height: 35px; background: #8d8585">
+    <div class="form-check form-switch" style="display: block; position: relative; left: 35%; top: 4px">
+        <label class="box style-e">
+            <input type="checkbox" id="fil" onclick="filter()">
+            <div class="box__checkmark"></div>
+            <label class="box__body" for="fil">Не выполненные задачи   </label>
+        </label>
+    </div>
+</div>
+<div id="content" class="content">
+    <ul class="rounded">
+        <li th:each="item : ${items}">
+            <a class="w-100" th:href="@{/item/{id}(id=${item.id})}">
+                <div class="row align-items-center">
+                    <div class="col-sm-2" th:switch="${item.status.name()}">
+                        <label class="checkbox-ya">
+                            <input th:case="'ACTIVE'" type="checkbox" onclick="status(this.value)" th:value="${item.id}">
+                            <input th:case="'NOT_ACTIVE'" type="checkbox" checked onclick="status(this.value)" th:value="${item.id}">
+                            <span class="checkbox-ya-switch">
+		                        <span class="checkbox-ya-feature" data-label-on="Сделал"
+                                      data-label-off="В процессе"></span>
+	                        </span>
+                        </label>
+                    </div>
+                    <div class="col-sm-9" id="description">
+                        <p th:text="${item.description}"></p>
+                    </div>
+                    <div class="col-sm-1">
+                        <form class="form" method="get" th:action="@{/item/del/{id}(id=${item.id})}">
+                            <button class="btn" type="submit"><i class="fa fa-trash"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

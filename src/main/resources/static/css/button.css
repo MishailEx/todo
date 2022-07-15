@@ -1,0 +1,7 @@
+.btn {
+    float: right;
+    border: none; /* Remove borders */
+    color: rgba(93, 171, 232, 0.73); /* White text */
+    font-size: 18px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+}

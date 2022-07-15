@@ -1,0 +1,60 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <title>Todo list</title>
+</head>
+<link rel="stylesheet" href="../css/content.css" type="text/css"/>
+<link rel="stylesheet" href="../css/checkbox.css" type="text/css"/>
+<link rel="stylesheet" href="../css/button.css" type="text/css"/>
+<body>
+<div>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="navbar-nav" style="margin-left: 40px">
+            <li class="nav-item active">
+                <a class="nav-link" href="home">TODO</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav  ml-auto">
+            <li class="nav-item active" id="username">
+                <a class="nav-link" th:text="${user.name}"></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/logout">Выйти</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div id="content" class="content">
+    <form method="post" action="/item">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">With textarea</span>
+            </div>
+            <input type="hidden" name="id" th:value="${user.id}">
+            <textarea name="description" class="form-control" aria-label="With textarea"></textarea>
+        </div>
+        <button class="btn" type="submit">Ok</button>
+    </form>
+</div>
+</body>
+</html>
