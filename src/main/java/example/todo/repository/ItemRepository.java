@@ -1,7 +1,6 @@
 package example.todo.repository;
 
 import example.todo.entity.Item;
-import example.todo.entity.User;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
